@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sriram Venkatesan — Backend Software Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181c24;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #eeeae0;
+    --muted: #8a8a7e;
+    --accent: #c8f55a;
+    --accent2: #5af5c8;
+    --accent3: #f5c85a;
+    --red: #f5705a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 4rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,12,16,0.85);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.8rem; font-weight: 500;
+    color: var(--muted); text-decoration: none;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 70% 40%, rgba(200,245,90,0.07) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(90,245,200,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem; color: var(--accent);
+    border: 1px solid rgba(200,245,90,0.25);
+    padding: 6px 14px; border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+  .hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .hero-name span { color: var(--accent); font-style: italic; }
+  .hero-title {
+    font-size: 1rem; font-weight: 400; color: var(--muted);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 1.75rem;
+  }
+  .hero-summary {
+    font-size: 1rem; color: rgba(238,234,224,0.7);
+    line-height: 1.8; max-width: 480px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0.75rem 1.75rem;
+    font-size: 0.85rem; font-weight: 500; font-family: 'Outfit', sans-serif;
+    text-decoration: none; border-radius: 8px;
+    transition: all 0.2s; cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--accent); color: #0a0c10; border: none;
+  }
+  .btn-primary:hover { background: #d6ff6a; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border2);
+  }
+  .btn-ghost:hover { border-color: var(--text); }
+
+  .hero-right { position: relative; }
+  .hero-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative; overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .stat-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+  .stat-card.accent { border-color: rgba(200,245,90,0.2); }
+  .stat-card.accent2 { border-color: rgba(90,245,200,0.2); }
+  .stat-card.accent3 { border-color: rgba(245,200,90,0.2); }
+  .stat-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.8rem; line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-number.c1 { color: var(--accent); }
+  .stat-number.c2 { color: var(--accent2); }
+  .stat-number.c3 { color: var(--accent3); }
+  .stat-number.c4 { color: var(--red); }
+  .stat-label { font-size: 0.8rem; color: var(--muted); font-weight: 400; }
+
+  /* SECTIONS */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; color: var(--accent);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.1; margin-bottom: 3rem;
+  }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* SKILLS */
+  #skills { background: var(--surface); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+  .skill-group {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .skill-group:hover { border-color: var(--border2); }
+  .skill-group-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; color: var(--muted);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 0.78rem; font-weight: 400; font-family: 'DM Mono', monospace;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    transition: all 0.15s;
+  }
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
+  .tag.hot { border-color: rgba(200,245,90,0.3); color: var(--accent); background: rgba(200,245,90,0.06); }
+
+  /* EXPERIENCE */
+  .exp-block {
+    border-left: 2px solid var(--border);
+    padding-left: 2rem;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  .exp-block::before {
+    content: '';
+    position: absolute; left: -5px; top: 6px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+  }
+  .exp-company {
+    font-size: 0.75rem; font-weight: 500; font-family: 'DM Mono', monospace;
+    color: var(--accent); letter-spacing: 0.08em;
+    margin-bottom: 0.25rem;
+  }
+  .exp-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem; margin-bottom: 0.25rem;
+  }
+  .exp-date {
+    font-size: 0.78rem; color: var(--muted);
+    font-family: 'DM Mono', monospace; margin-bottom: 1.25rem;
+  }
+  .exp-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .exp-list li {
+    font-size: 0.95rem; color: rgba(238,234,224,0.8);
+    padding-left: 1rem; position: relative;
+  }
+  .exp-list li::before { content: '→'; position: absolute; left: 0; color: var(--muted); font-size: 0.8rem; line-height: 1.7; }
+
+  /* PROJECTS */
+  #projects { background: var(--surface); }
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .project-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative; overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .project-card:hover { border-color: rgba(200,245,90,0.2); transform: translateY(-3px); }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .project-card:hover::before { opacity: 1; }
+  .project-num {
+    font-family: 'DM Mono', monospace; font-size: 0.7rem;
+    color: var(--muted); margin-bottom: 1rem;
+  }
+  .project-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem; margin-bottom: 0.6rem; line-height: 1.2;
+  }
+  .project-subtitle { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.25rem; }
+  .project-metrics { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .metric {
+    display: flex; align-items: center; gap: 6px;
+    font-family: 'DM Mono', monospace; font-size: 0.75rem;
+    padding: 5px 12px; border-radius: 6px;
+    border: 1px solid;
+  }
+  .metric.green { color: var(--accent); border-color: rgba(200,245,90,0.3); background: rgba(200,245,90,0.06); }
+  .metric.cyan { color: var(--accent2); border-color: rgba(90,245,200,0.3); background: rgba(90,245,200,0.06); }
+  .metric.gold { color: var(--accent3); border-color: rgba(245,200,90,0.3); background: rgba(245,200,90,0.06); }
+  .project-desc { font-size: 0.9rem; color: rgba(238,234,224,0.7); line-height: 1.75; margin-bottom: 1.5rem; }
+  .tech-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tech { font-size: 0.72rem; font-family: 'DM Mono', monospace; color: var(--muted); padding: 3px 8px; border: 1px solid var(--border); border-radius: 4px; }
+
+  /* EDUCATION & ACHIEVEMENTS */
+  .edu-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .edu-degree { font-family: 'DM Serif Display', serif; font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .edu-school { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; }
+  .cgpa-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(200,245,90,0.1); border: 1px solid rgba(200,245,90,0.25);
+    padding: 8px 18px; border-radius: 8px;
+    font-family: 'DM Mono', monospace; font-size: 0.85rem; color: var(--accent);
+  }
+  .achievements-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+  .achievement {
+    display: flex; align-items: flex-start; gap: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem;
+  }
+  .ach-icon { font-size: 1.2rem; margin-top: 2px; flex-shrink: 0; }
+  .ach-text strong { font-weight: 500; display: block; margin-bottom: 0.15rem; }
+  .ach-text span { font-size: 0.85rem; color: var(--muted); }
+
+  /* CONTACT */
+  #contact { text-align: center; }
+  .contact-wrapper { max-width: 600px; margin: 0 auto; }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 8px;
+    padding: 0.75rem 1.5rem; border-radius: 10px;
+    border: 1px solid var(--border2);
+    color: var(--text); text-decoration: none;
+    font-size: 0.85rem; font-weight: 400;
+    transition: all 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-link svg { width: 16px; height: 16px; }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem; color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-up { animation: fadeUp 0.7s ease forwards; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+  .delay-5 { animation-delay: 0.5s; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.25rem 2rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 2rem 3rem; }
+    section { padding: 4rem 2rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">SV.portfolio</span>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag fade-up">Available for opportunities</div>
+    <h1 class="hero-name fade-up delay-1">Sriram<br/><span>Venkatesan</span></h1>
+    <p class="hero-title fade-up delay-2">Backend Software Engineer &amp; Java Cloud Specialist</p>
+    <p class="hero-summary fade-up delay-3">
+      Building scalable APIs and data-driven systems with Java, Spring Boot, Python, and AWS. 
+      Passionate about performance tuning, microservices architecture, and clean code. 
+      400+ LeetCode problems solved and counting.
+    </p>
+    <div class="hero-cta fade-up delay-4">
+      <a href="mailto:venkatasriram0303@gmail.com" class="btn btn-primary">Get in touch ↗</a>
+      <a href="https://github.com/sriram030307" target="_blank" class="btn btn-ghost">GitHub</a>
+      <a href="https://linkedin.com/in/sriramvenkatesan0303" target="_blank" class="btn btn-ghost">LinkedIn</a>
+    </div>
+  </div>
+
+  <div class="hero-right fade-up delay-3">
+    <div class="hero-stats">
+      <div class="stat-card accent">
+        <div class="stat-number c1">400+</div>
+        <div class="stat-label">LeetCode problems solved</div>
+      </div>
+      <div class="stat-card accent2">
+        <div class="stat-number c2">30%</div>
+        <div class="stat-label">Query perf boost at Hexaware</div>
+      </div>
+      <div class="stat-card accent3">
+        <div class="stat-number c3">8.89</div>
+        <div class="stat-label">CGPA — Computer Science AI</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number c4">99.9%</div>
+        <div class="stat-label">Message delivery success rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Toolbox</div>
+  <h2 class="section-title">Skills &amp; Technologies</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-label">Languages</div>
+      <div class="skill-tags">
+        <span class="tag hot">Java</span>
+        <span class="tag hot">Python</span>
+        <span class="tag hot">SQL</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">C++</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Backend &amp; Frameworks</div>
+      <div class="skill-tags">
+        <span class="tag hot">Spring Boot</span>
+        <span class="tag hot">REST APIs</span>
+        <span class="tag hot">Microservices</span>
+        <span class="tag">Spring MVC</span>
+        <span class="tag">Flask</span>
+        <span class="tag">JDBC</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Databases</div>
+      <div class="skill-tags">
+        <span class="tag hot">MySQL</span>
+        <span class="tag hot">Redis</span>
+        <span class="tag hot">Snowflake</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Cloud &amp; DevOps</div>
+      <div class="skill-tags">
+        <span class="tag hot">AWS S3 / EC2</span>
+        <span class="tag hot">Docker</span>
+        <span class="tag">Apache Kafka</span>
+        <span class="tag">CI/CD</span>
+        <span class="tag">Nginx</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Testing &amp; Tools</div>
+      <div class="skill-tags">
+        <span class="tag">JUnit</span>
+        <span class="tag">Mockito</span>
+        <span class="tag">Git</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Frontend</div>
+      <div class="skill-tags">
+        <span class="tag">HTML5</span>
+        <span class="tag">CSS3</span>
+        <span class="tag">Bootstrap</span>
+        <span class="tag">React Native</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Concepts</div>
+      <div class="skill-tags">
+        <span class="tag hot">OOPs</span>
+        <span class="tag hot">DSA</span>
+        <span class="tag">MVC Architecture</span>
+        <span class="tag">Agile/Scrum</span>
+        <span class="tag">SDLC</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Systems</div>
+      <div class="skill-tags">
+        <span class="tag">Linux/Unix</span>
+        <span class="tag">HTTP/HTTPS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Career</div>
+  <h2 class="section-title">Work Experience</h2>
+  <div class="exp-block">
+    <div class="exp-company">Hexaware Technologies</div>
+    <div class="exp-title">Data Engineer Intern</div>
+    <div class="exp-date">Oct 2025 – Dec 2025 · Chennai, India</div>
+    <ul class="exp-list">
+      <li>Engineered scalable ETL pipelines using Python and SQL to process datasets exceeding 10,000 records.</li>
+      <li>Optimized database query performance by <strong>30%</strong> through advanced indexing and strategic query refactoring.</li>
+      <li>Automated data processing workflows using Python, reducing manual effort and improving operational efficiency significantly.</li>
+      <li>Designed Snowflake data models for analytics including customer churn forecasting, built on AWS infrastructure.</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Built</div>
+  <h2 class="section-title">Featured Projects</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-num">01 / 02</div>
+      <h3 class="project-name">Auralis</h3>
+      <p class="project-subtitle">AI-Powered Emergency Response System</p>
+      <div class="project-metrics">
+        <span class="metric green">↓ 40% SOS response time</span>
+        <span class="metric cyan">99.9% delivery rate</span>
+        <span class="metric gold">&lt;200ms latency</span>
+      </div>
+      <p class="project-desc">
+        Real-time emergency alert platform with multi-channel notifications across SMS, Email, and WhatsApp.
+        Location-based alerting with optimized server-side logic ensures critical data reaches emergency
+        contacts with sub-200ms latency.
+      </p>
+      <div class="tech-stack">
+        <span class="tech">Java</span>
+        <span class="tech">Spring Boot</span>
+        <span class="tech">React Native</span>
+        <span class="tech">Firebase</span>
+        <span class="tech">Flask</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">02 / 02</div>
+      <h3 class="project-name">API Gateway</h3>
+      <p class="project-subtitle">Rate Limiting &amp; Authentication Layer</p>
+      <div class="project-metrics">
+        <span class="metric green">1,000+ concurrent req</span>
+        <span class="metric cyan">95% fewer breaches</span>
+        <span class="metric gold">↓ 25% debug time</span>
+      </div>
+      <p class="project-desc">
+        Centralized API Gateway with JWT authentication and Redis-backed rate limiting. 
+        Handles 1,000+ concurrent requests at stable response times while shielding 
+        backend services from traffic spikes and unauthorized access.
+      </p>
+      <div class="tech-stack">
+        <span class="tech">Java</span>
+        <span class="tech">Spring Boot</span>
+        <span class="tech">JWT</span>
+        <span class="tech">Redis</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- EDUCATION + ACHIEVEMENTS -->
+<section id="education">
+  <div class="section-label">Background</div>
+  <h2 class="section-title">Education &amp; Achievements</h2>
+
+  <div class="edu-block">
+    <div class="edu-degree">B.E. Computer Science Engineering — AI</div>
+    <div class="edu-school">Saveetha University · July 2023 – July 2027</div>
+    <div class="cgpa-badge">◈ CGPA&nbsp;&nbsp;8.89 / 10</div>
+  </div>
+
+  <div class="achievements-list">
+    <div class="achievement">
+      <span class="ach-icon">🏆</span>
+      <div class="ach-text">
+        <strong>Best Student Leadership Award (2026)</strong>
+        <span>Recognised for outstanding leadership contributions across student initiatives.</span>
+      </div>
+    </div>
+    <div class="achievement">
+      <span class="ach-icon">⭐</span>
+      <div class="ach-text">
+        <strong>Best Student Award (2024)</strong>
+        <span>Awarded for academic excellence and overall student performance.</span>
+      </div>
+    </div>
+    <div class="achievement">
+      <span class="ach-icon">☁️</span>
+      <div class="ach-text">
+        <strong>Oracle Certified — OCI Foundations Associate</strong>
+        <span>Professional certification in Oracle Cloud Infrastructure fundamentals.</span>
+      </div>
+    </div>
+    <div class="achievement">
+      <span class="ach-icon">🗄️</span>
+      <div class="ach-text">
+        <strong>Oracle Certified MySQL Expert</strong>
+        <span>Validated expertise in MySQL database design, administration, and optimization.</span>
+      </div>
+    </div>
+    <div class="achievement">
+      <span class="ach-icon">💡</span>
+      <div class="ach-text">
+        <strong>400+ LeetCode Problems Solved</strong>
+        <span>Strong problem-solving track record in Data Structures &amp; Algorithms.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrapper">
+    <div class="section-label" style="text-align:center">Let's connect</div>
+    <h2 class="section-title" style="text-align:center;margin-bottom:0.75rem">Get in Touch</h2>
+    <p style="color:var(--muted);font-size:0.95rem">Open to backend engineering roles, internships, and interesting collaborations.</p>
+    <div class="contact-links">
+      <a href="mailto:venkatasriram0303@gmail.com" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        venkatasriram0303@gmail.com
+      </a>
+      <a href="tel:+919840261962" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +91 98402 61962
+      </a>
+      <a href="https://linkedin.com/in/sriramvenkatesan0303" target="_blank" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/sriram030307" target="_blank" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        GitHub
+      </a>
+      <a href="https://maps.google.com/?q=Chennai,India" target="_blank" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Chennai, India
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Sriram Venkatesan · Built with precision · Chennai, India · 2026</span>
+</footer>
+
+</body>
+</html>
